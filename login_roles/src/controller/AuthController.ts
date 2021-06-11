@@ -1,6 +1,8 @@
 import { getRepository } from 'typeorm';
 import { Request, Response } from 'express';
 import { User } from '../entity/User';
+import * as jwt from 'jsonwebtoken';
+import config from '../config/config';
 
 
 
@@ -21,7 +23,15 @@ class AuthController{
         catch(e){
             return res.status(400).json({message:' usuario o contraseña incorrecto!'})    
         }
-        res.send(user);
+
+        //comproba contraseña
+        if(!user.checkPassword(password)){
+            return res.status(400).json({message: ' Usuario o contraseña incorrecto'})
+        }
+
+        const token = jwt.sign({userId: user.id, username: user.username}, config.jwtSecret,{expiresIn: '1h'});
+
+        res.json({message: 'OK', token});
     };
 }
 export default AuthController;

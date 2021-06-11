@@ -37,7 +37,8 @@ export class UserController {
         user.role = role;
 
         //validar
-        const errors  = await validate(user);
+        const validationOpt = {validationError: {target:false, value:false }};
+        const errors  = await validate(user, validationOpt);
         if(errors.length > 0){
             return res.status(400).json(errors);
         }
@@ -46,6 +47,7 @@ export class UserController {
 
         const userRepository = getRepository(User);
         try{
+            user.hashPassword();
             await userRepository.save(user);
         }
         catch(e){
@@ -70,7 +72,9 @@ export class UserController {
         catch{
             return res.status(404).json({message: 'Usuario no encontrado'})
         }
-        const errors = await validate(user);
+
+        const validationOpt = {validationError: {target:false, value:false }};
+        const errors = await validate(user, validationOpt);
         if(errors.length > 0 ){
             return res.status(400).json(errors);
         }
