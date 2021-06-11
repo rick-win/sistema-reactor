@@ -1,7 +1,7 @@
 import { UserController } from '../controller/UserController';
 import { Router } from 'express';
 import { checkJwt } from '../middleware/jwt';
-
+import { checkRole } from '../middleware/role';
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get('/', [checkJwt], UserController.getAll);
 router.get('/:id', [checkJwt], UserController.getById);
 
 //crear nuevo usuario
-router.post('/', [checkJwt], UserController.newUser);
+router.post('/', [checkJwt, checkRole(['admin'])], UserController.newUser);
 
 //editar usuario
 router.patch('/:id', [checkJwt], UserController.editUser);
