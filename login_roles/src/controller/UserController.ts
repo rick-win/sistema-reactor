@@ -6,8 +6,15 @@ import {validate} from 'class-validator';
 export class UserController {
     static getAll = async(req: Request, res: Response) =>{
         const userRepository = getRepository(User);
-        const users = await userRepository.find();
+        let users;
 
+        try{
+            const users = await userRepository.find();
+        }
+        catch(e){
+            res.status(404).json({message: 'Algo anda mal'});
+        }
+        
         if(users.length > 0 ){
             res.send(users);
         }
@@ -75,6 +82,7 @@ export class UserController {
 
         const validationOpt = {validationError: {target:false, value:false }};
         const errors = await validate(user, validationOpt);
+        
         if(errors.length > 0 ){
             return res.status(400).json(errors);
         }

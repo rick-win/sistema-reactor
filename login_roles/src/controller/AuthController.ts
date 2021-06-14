@@ -22,12 +22,12 @@ class AuthController{
             user = await userRepository.findOneOrFail({where:{username}});
         }
         catch(e){
-            return res.status(400).json({message:' usuario o contraseña incorrecto!'})    
+            return res.status(400).json({message:' usuario o contraseña incorrecto!'});   
         }
 
         //comproba contraseña
         if(!user.checkPassword(password)){
-            return res.status(400).json({message: ' Usuario o contraseña incorrecto'})
+            return res.status(400).json({message: ' Usuario o contraseña incorrecto'});
         }
 
         const token = jwt.sign({userId: user.id, username: user.username}, config.jwtSecret,{expiresIn: '1h'});
@@ -36,7 +36,7 @@ class AuthController{
     };
 
     static changePassword = async (req: Request, res:Response) =>{
-        const userId = res.locals.jwtPayload;
+        const {userId} = res.locals.jwtPayload;
         const {oldPassword, newPassword} = req.body;
 
         if(!(oldPassword && newPassword)){

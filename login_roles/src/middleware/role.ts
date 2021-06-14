@@ -5,7 +5,7 @@ import {User} from '../entity/User';
 export const checkRole = (roles:Array <string>)=>{
 
     return async (req: Request, res: Response, next: NextFunction)=>{
-        const{userId} = res.locals.jwtPayload;
+        const {userId} = res.locals.jwtPayload;
         const userRepository = getRepository(User);
         let user: User;
 

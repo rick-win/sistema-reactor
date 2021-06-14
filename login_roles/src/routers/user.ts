@@ -9,13 +9,13 @@ const router = Router();
 router.get('/',[checkJwt, checkRole(['admin'])], UserController.getAll);
 
 //leer un usuario
-router.get('/:id', [checkJwt, checkRole(['admin'])], UserController.getById);
+router.get('/:id',[checkJwt, checkRole(['admin'])], UserController.getById);
 
 //crear nuevo usuario
-router.post('/', [checkJwt, checkRole(['admin'])], UserController.newUser);
+router.post('/',[checkJwt, checkRole(['admin'])], UserController.newUser);
 
 //editar usuario
-router.patch('/:id', [checkJwt, checkRole(['admin'])], UserController.editUser);
+router.patch('/:id',[checkJwt, checkRole(['admin'])], UserController.editUser);
 
 //eliminar usuario
 router.delete('/:id',[checkJwt, checkRole(['admin'])], UserController.deleteUser);
