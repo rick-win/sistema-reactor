@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import config from '../config/config';
 
 export const checkJwt = (req: Request, res: Response, next: NextFunction) =>{
-    console.log('REQ =>', req.headers);
+    
     const token = <string>req.headers['auth'];
     let jwtPayload;
 

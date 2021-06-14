@@ -9,7 +9,7 @@ export class UserController {
         let users;
 
         try{
-            const users = await userRepository.find();
+            const users = await userRepository.find({select:['id', 'username', 'role']});
         }
         catch(e){
             res.status(404).json({message: 'Algo anda mal'});
@@ -50,7 +50,7 @@ export class UserController {
             return res.status(400).json(errors);
         }
 
-        //todo: has password pendiente
+        //todo: has password
 
         const userRepository = getRepository(User);
         try{
