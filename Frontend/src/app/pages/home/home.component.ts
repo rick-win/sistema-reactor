@@ -1,4 +1,6 @@
+import { AuthService } from '../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-home',
@@ -6,8 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+   constructor(public authSvc: AuthService) { }
 
   ngOnInit(): void {
   }
